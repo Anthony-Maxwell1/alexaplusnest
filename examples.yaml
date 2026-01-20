@@ -1,0 +1,85 @@
+# This uses the official Alexa integration.
+
+# Read these examples in order! The comments instruct on what to do and aren't repeated.
+
+# Follow this guide to set up Home Assistant with Google Nest: https://www.home-assistant.io/integrations/nest/#Prerequisites
+# Follow this guide to set up Home Assistant with Alexa:       https://www.home-assistant.io/integrations/alexa_devices#configuration
+
+# Unfortunatetly there is currently no setup to be able to read the current volume, only set it.
+# Through the HACS Alexa Media Player integration, it provides a block to do so. The official integration requires you to go through a text command.
+
+# This just announces.
+alias: Front Door
+description: ""
+triggers:
+  - device_id: _________ # You should choose this in the visual editor. You can add the Device Trigger block and configure it, by choosing your doorbell and 
+    domain: nest
+    type: doorbell_chime
+    trigger: device
+conditions: []
+actions:
+  - action: notify.send_message
+    metadata: {}
+    data:
+      message: Someone is at the front door.
+    target:
+      entity_id: notify.____________  # Set this to your alexaname_announce, e.g. myechodot would be myechodot_announce
+mode: single
+
+
+# This sets the volume to max and announces.
+alias: Front Door
+description: ""
+triggers:
+  - device_id: __________
+    domain: nest
+    type: doorbell_chime
+    trigger: device
+conditions: []
+actions:
+  - action: alexa_devices.send_text_command
+    metadata: {}
+    data:
+      device_id: ________   # Alexa device ID. Create this block manually in the visual editpr.
+      text_command: Volume 10
+  - action: notify.send_message
+    metadata: {}
+    data:
+      message: Someone is at the front door.
+    target:
+      entity_id: notify._________
+mode: single
+
+# This sets the volume to max, announces then sets volume to half.
+# Alexa is not blocking, meaning we have to manually delay.
+alias: Front Door
+description: ""
+triggers:
+  - device_id: ________
+    domain: nest
+    type: doorbell_chime
+    trigger: device
+conditions: []
+actions:
+  - action: alexa_devices.send_text_command
+    metadata: {}
+    data:
+      device_id: _________
+      text_command: Volume 10
+  - action: notify.send_message
+    metadata: {}
+    data:
+      message: Someone is at the front door.
+    target:
+      entity_id: notify.______
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: alexa_devices.send_text_command
+    metadata: {}
+    data:
+      device_id: _______
+      text_command: Volume 5
+mode: single
