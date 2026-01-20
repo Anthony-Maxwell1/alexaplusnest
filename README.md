@@ -1,3 +1,9 @@
+> [!TIP]
+> Set this up to run on boot with automatic restarts using systemd/systemctl (Linux) or Task Scheduler (Windows).
+>
+> If you already use Home Assistant, it’s strongly recommended to use an automation with the Google Nest integration instead—two example automations are included in this repository.
+>
+> If you’re planning to dedicate a device (e.g. a Raspberry Pi) to this project, Home Assistant is the better long-term solution. It natively supports multiple automations, is well-tested at scale, provides reliable persistence, and requires significantly less maintenance than running this standalone.
 # Alexa + Nest
 ## Google doesn't let me use alexa with the V1 doorbell. So I fixed it.
 ### Prerequisites
